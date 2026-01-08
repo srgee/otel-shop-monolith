@@ -16,3 +16,6 @@ wheels/
 .coverage.*
 htmlcov/
 coverage.xml
+
+staticfiles/
+/static_root/

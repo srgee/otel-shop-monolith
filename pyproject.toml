@@ -1,10 +1,31 @@
 [project]
 name = "otel-shop"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "OpenTelemetry demo app (monolitic version)"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "django==5.2",
+    "django~=5.2",
     "psycopg[binary]==3.3.2",
 ]
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar~=6.1",
+    "pytest~=9.0",
+    "pytest-django~=4.11",
+    "ruff>=0.14.10",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"] # E=Error, F=Pyflakes, I=Isort (ordenar imports), UP=PyUpgrade
+ignore = []
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py", "*_test.py"]
+addopts = "--nomigrations --reuse-db"
