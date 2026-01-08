@@ -10,7 +10,7 @@ list:
 
 setup:
     uv sync
-    @echo "Environment ready. use 'just db-up' to start DB."
+    @echo "Environment ready. Use 'just db-up' to start DB."
 
 # --- Django ---
 
@@ -34,22 +34,23 @@ test:
     uv run pytest
 
 # --- Postgres podman recipes ---
+
 db-up:
-    @if podman ps -a --format "{{.Names}}" | grep -q $(CONTAINER_NAME); then \
-        echo "Starting DB container..."; \
-        podman start $(CONTAINER_NAME); \
-    else \
-        echo "Building new DB container..."; \
-        podman run -d \
-            --name $(CONTAINER_NAME) \
-            -e POSTGRES_DB=$(DB_NAME) \
-            -e POSTGRES_USER=$(DB_USER) \
-            -e POSTGRES_PASSWORD=$(DB_PASS) \
-            -p 5432:5432 \
-            -v postgres_data:/var/lib/postgresql/data \
-            postgres:16-alpine; \
-    fi
-    @echo "DB ready listening on port 5432"
+#    @if podman ps -a --format {{.Names}} | grep -q $(CONTAINER_NAME); then \
+#        echo "Starting DB container..."; \
+#        podman start $(CONTAINER_NAME); \
+#    else \
+#        echo "Building new DB container..."; \
+#        podman run -d \
+#            --name $(CONTAINER_NAME) \
+#            -e POSTGRES_DB=$(DB_NAME) \
+#            -e POSTGRES_USER=$(DB_USER) \
+#            -e POSTGRES_PASSWORD=$(DB_PASS) \
+#            -p 5432:5432 \
+#            -v postgres_data:/var/lib/postgresql/data \
+#            postgres:16-alpine; \
+#    fi
+#    @echo "DB ready listening on port 5432"
 
 db-stop:
     podman stop $(CONTAINER_NAME)
