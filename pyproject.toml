@@ -1,12 +1,13 @@
 [project]
 name = "otel-shop"
-version = "1.0.0"
-description = "OpenTelemetry demo app (monolitic version)"
+version = "1.0"
+description = "OpenTelemetry demo app (monolith version)"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "django~=5.2",
-    "psycopg[binary]==3.3.2",
+    "django-environ~=0.12",
+    "psycopg[binary]==3.3.x",
 ]
 
 [dependency-groups]
@@ -14,7 +15,7 @@ dev = [
     "django-debug-toolbar~=6.1",
     "pytest~=9.0",
     "pytest-django~=4.11",
-    "ruff>=0.14.10",
+    "ruff==0.14.x",
 ]
 
 [tool.ruff]
