@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path 
+import logging.config
+import sys
 
 import environ
+
+from .utils import json_formatter
 
 env = environ.Env(
   DEBUG=(bool, False)
@@ -131,3 +135,36 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Define custom logging settings
+LOGGING_CONFIG = None
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'json': {
+            '()': json_formatter,
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        }
+    },
+    'loggers': {
+        'config': {
+            'level': env(APP_LOGLEVEL),
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    },
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['console'],
+    },
+})
